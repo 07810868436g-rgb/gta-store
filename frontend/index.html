@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GTA 6 Store</title>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* Глубокий темный фон премиального магазина */
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        /* Эффект матового стекла (Glassmorphism) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Неоновое свечение для главной кнопки */
+        .neon-button {
+            background: linear-gradient(90deg, #ff007f, #7000ff);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.6), 0 0 30px rgba(112, 0, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .neon-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 5px rgba(255, 0, 127, 0.6);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center p-4">
+
+    <div class="glass-card rounded-2xl w-full max-w-sm mt-6 p-4 flex flex-col items-center">
+        
+        <div class="w-full h-56 bg-gray-800 rounded-xl mb-4 overflow-hidden relative shadow-lg">
+            <img src="https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=800&auto=format&fit=crop" alt="GTA 6 Cover" class="w-full h-full object-cover opacity-90">
+            <div class="absolute top-3 right-3 bg-black bg-opacity-80 px-2 py-1 rounded text-xs font-bold text-cyan-400 border border-cyan-400/30">
+                ПРЕДЗАКАЗ
+            </div>
+        </div>
+
+        <h1 class="text-2xl font-bold mb-1 text-center tracking-wide">Grand Theft Auto VI</h1>
+        <p class="text-gray-400 text-sm mb-5">Ключ активации (Регион: РФ/СНГ)</p>
+        
+        <div class="w-full flex justify-between items-center mb-6 px-2">
+            <span class="text-2xl font-bold">₽4 990</span>
+            <span class="text-sm text-gray-500 line-through">₽7 990</span>
+        </div>
+
+        <button id="buyButton" class="neon-button w-full py-4 rounded-xl text-white font-bold text-lg uppercase tracking-wider">
+            Купить ключ
+        </button>
+    </div>
+
+    <script>
+        // Инициализируем Telegram Web App
+        const tg = window.Telegram.WebApp;
+        
+        // Автоматически разворачиваем Mini App на весь экран телефона
+        tg.expand();
+
+        // Прописываем логику при нажатии на кнопку "Купить"
+        document.getElementById('buyButton').addEventListener('click', () => {
+            // Запускаем сильную вибрацию телефона (Haptic Feedback)
+            tg.HapticFeedback.impactOccurred('heavy');
+            
+            // Формируем пакет данных, который отправим нашему Python-боту
+            const orderData = {
+                action: "buy_key",
+                item: "gta6_ru",
+                price: 4990
+            };
+
+            // Отправляем данные в бота (закрывает Mini App и перекидывает в чат)
+            tg.sendData(JSON.stringify(orderData));
+        });
+    </script>
+</body>
+</html>
